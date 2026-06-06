@@ -1,5 +1,5 @@
 
-const DisplayTodos = ({ todos, handleDelete, handleComplete }) => {
+const DisplayTodos = ({ todos, handleDelete, handleComplete, handleEdit, editableId }) => {
 
   return (
     <section>
@@ -16,6 +16,7 @@ const DisplayTodos = ({ todos, handleDelete, handleComplete }) => {
               <span >{item.isCompleted ? "✅" : "❌"}</span>
               <span style={todoStyle}>{item.text}</span>
               <button onClick={() => handleComplete(item.id)}>{item.isCompleted ? "Mark as incomplete" : "Mark as Complete"}</button>
+              <button onClick={() => handleEdit(item.id)} disabled={editableId !== null}>✏️</button>
               <button onClick={() => handleDelete(item.id)}>🗑️</button>
             </li>
           )

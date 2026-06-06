@@ -6,6 +6,7 @@ import ControlTodos from "./components/ControlTodos";
 function App() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState(JSON.parse(localStorage.getItem("application_todos")) || []);
+  const [editableId , setEditableId] = useState(null);
 
   const handleInputChange = (e) => {
 
@@ -47,6 +48,32 @@ function App() {
   
   }
 
+  const handleEdit = (id) => {
+    const currentTodo = todos.find(
+      todo => todo.id === id
+    );
+    setEditableId(currentTodo.id);
+    console.log(currentTodo.text);
+    setInput(currentTodo.text);
+  }
+
+  const handleSave = (id) => {
+    const verifiedInput = input.trim();
+    if (verifiedInput !== "") {
+      setTodos((prevTodos) => {
+        return prevTodos.map((todo) => {
+          if (todo.id === id) {
+            return { ...todo, text: verifiedInput }
+          } else {
+            return todo
+          }
+        })
+      });
+      setInput("");
+      setEditableId(null);
+    }
+  }
+
 
 useEffect(() => {
   localStorage.setItem("application_todos", JSON.stringify(todos));
@@ -58,8 +85,8 @@ useEffect(() => {
         <h1>Todo App</h1>
       </header>
       <main>
-        <ControlTodos input={input} handleInputChange={handleInputChange} handleAdd={handleAdd} handleKeyDownToAddTodo={handleKeyDownToAddTodo}/>
-        <DisplayTodos todos={todos} handleDelete={handleDelete} handleComplete={handleComplete}/>
+        <ControlTodos input={input} handleInputChange={handleInputChange} handleAdd={handleAdd} handleKeyDownToAddTodo={handleKeyDownToAddTodo} handleSave={handleSave} editableId={editableId}/>
+        <DisplayTodos todos={todos} handleDelete={handleDelete} handleComplete={handleComplete} handleEdit={handleEdit} editableId={editableId}/>
       </main>
       <footer>
 
