@@ -1,6 +1,7 @@
 
-const DisplayTodos = ({ todos, handleDelete, handleComplete, handleEdit, editableId, handleFilterChange, currentFilter }) => {
+const DisplayTodos = ({ todos, handleDelete, handleComplete, handleEdit, editableId, handleFilterChange, currentFilter, countTodoObject }) => {
 
+  const {totalTodosCount, completedTodosCount, pendingTodosCount} = countTodoObject;
 
 
   return (
@@ -14,7 +15,12 @@ const DisplayTodos = ({ todos, handleDelete, handleComplete, handleEdit, editabl
           <option value="pending">Pending</option>
         </select>
       </div>
-      {todos.length === 0 && <div>No todos to show...</div>}
+      <div>
+        <span>📜<strong>Total Todos :</strong> {totalTodosCount} | </span>
+        <span>✅<strong>Completed : </strong>{completedTodosCount} | </span>
+        <span>❌<strong>Pending : </strong>{pendingTodosCount} </span>
+      </div>
+      {todos.length === 0 && <em>No todos to show...</em>}
       <ul>
         {todos.length > 0 && todos.map((item) => {
           const todoStyle = {
