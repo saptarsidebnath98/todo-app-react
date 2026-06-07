@@ -33,7 +33,12 @@ function App() {
   }
 
   const handleDelete = (id) => {
-    setTodos(prevTodos => prevTodos.filter((item) => item.id !== id))
+    const isConfirmed = window.confirm("Are you sure?");
+    if(isConfirmed){
+      setTodos(prevTodos => prevTodos.filter((item) => item.id !== id))
+    }
+
+    return;
   }
 
   const handleComplete = (id) => {
