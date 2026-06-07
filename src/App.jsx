@@ -7,6 +7,8 @@ function App() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState(JSON.parse(localStorage.getItem("application_todos")) || []);
   const [editableId , setEditableId] = useState(null);
+  const [currentFilter, setCurrentFilter] = useState("all");
+
 
   const handleInputChange = (e) => {
 
@@ -74,6 +76,22 @@ function App() {
     }
   }
 
+  const handleFilterChange = (e) => {
+    setCurrentFilter(e.target.value);
+  }
+
+  const filterTodos = (todos, currentFilter) => {
+    if(currentFilter === "all"){
+      return todos
+    }else if(currentFilter === "completed"){
+      return todos.filter((item) => item.isCompleted)
+    }else if(currentFilter === "pending"){
+      return todos.filter((item) => !item.isCompleted)
+    }
+
+    return todos;
+  }
+
 
 useEffect(() => {
   localStorage.setItem("application_todos", JSON.stringify(todos));
@@ -86,7 +104,7 @@ useEffect(() => {
       </header>
       <main>
         <ControlTodos input={input} handleInputChange={handleInputChange} handleAdd={handleAdd} handleKeyDownToAddTodo={handleKeyDownToAddTodo} handleSave={handleSave} editableId={editableId}/>
-        <DisplayTodos todos={todos} handleDelete={handleDelete} handleComplete={handleComplete} handleEdit={handleEdit} editableId={editableId}/>
+        <DisplayTodos todos={filterTodos(todos, currentFilter)} handleDelete={handleDelete} handleComplete={handleComplete} handleEdit={handleEdit} editableId={editableId} currentFilter={currentFilter} handleFilterChange={handleFilterChange}/>
       </main>
       <footer>
 
