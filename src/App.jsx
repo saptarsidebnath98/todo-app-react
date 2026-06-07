@@ -102,6 +102,10 @@ function App() {
     pendingTodosCount
   }
 
+  const handleClearCompleted = () => {
+    setTodos((prevTodos)=> prevTodos.filter((todo) => !todo.isCompleted))
+  }
+
 
 useEffect(() => {
   localStorage.setItem("application_todos", JSON.stringify(todos));
@@ -114,7 +118,7 @@ useEffect(() => {
       </header>
       <main>
         <ControlTodos input={input} handleInputChange={handleInputChange} handleAdd={handleAdd} handleKeyDownToAddTodo={handleKeyDownToAddTodo} handleSave={handleSave} editableId={editableId}/>
-        <DisplayTodos todos={filterTodos(todos, currentFilter)} handleDelete={handleDelete} handleComplete={handleComplete} handleEdit={handleEdit} editableId={editableId} currentFilter={currentFilter} handleFilterChange={handleFilterChange} countTodoObject={countTodoObject}/>
+        <DisplayTodos todos={filterTodos(todos, currentFilter)} handleDelete={handleDelete} handleComplete={handleComplete} handleEdit={handleEdit} editableId={editableId} currentFilter={currentFilter} handleFilterChange={handleFilterChange} countTodoObject={countTodoObject} handleClearCompleted={handleClearCompleted}/>
       </main>
       <footer>
 

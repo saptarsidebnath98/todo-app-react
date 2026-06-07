@@ -1,5 +1,5 @@
 
-const DisplayTodos = ({ todos, handleDelete, handleComplete, handleEdit, editableId, handleFilterChange, currentFilter, countTodoObject }) => {
+const DisplayTodos = ({ todos, handleDelete, handleComplete, handleEdit, editableId, handleFilterChange, currentFilter, countTodoObject, handleClearCompleted }) => {
 
   const {totalTodosCount, completedTodosCount, pendingTodosCount} = countTodoObject;
 
@@ -19,6 +19,8 @@ const DisplayTodos = ({ todos, handleDelete, handleComplete, handleEdit, editabl
         <span>📜<strong>Total Todos :</strong> {totalTodosCount} | </span>
         <span>✅<strong>Completed : </strong>{completedTodosCount} | </span>
         <span>❌<strong>Pending : </strong>{pendingTodosCount} </span>
+        {completedTodosCount > 0 && <button onClick={handleClearCompleted}>Clear Completed Todos</button>}
+        
       </div>
       {todos.length === 0 && <em>No todos to show...</em>}
       <ul>
